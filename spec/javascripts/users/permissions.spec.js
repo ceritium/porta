@@ -280,11 +280,14 @@ describe('ServiceAccess', function () {
     let state = {}
     let node = () => render(<ServiceAccess/>, state)
 
+    // all services are enabled, so individual checkboxes are disabled
     expect(node()).toContainElement(disabled)
 
+    // only some (or none) services are enabled, so nothing is disabled
     state.admin_sections = ['services']
-    expect(node()).toContainElement(disabled)
+    expect(node()).not.toContainElement(disabled)
 
+    // no services are enabled
     state.member_permission_service_ids = []
     expect(node()).not.toContainElement(disabled)
 
@@ -297,8 +300,10 @@ describe('ServiceAccess', function () {
     let state = {}
     let node = () => render(<ServiceAccess service={service}/>, state)
 
+    // all services are enabled
     expect(node()).toContainElement(checked)
 
+    // only some services are enabled
     state.admin_sections = ['services']
     expect(node()).toContainElement(checked)
 
@@ -308,6 +313,7 @@ describe('ServiceAccess', function () {
     state.member_permission_service_ids.push(service.id)
     expect(node()).toContainElement(checked)
 
+    // admin sections doesn't include 'services', so implying all services are enabled - means all are checked
     state.admin_sections = []
     expect(node()).toContainElement(checked)
   })

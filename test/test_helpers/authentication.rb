@@ -71,4 +71,8 @@ ActionDispatch::IntegrationTest.class_eval do
     get_via_redirect  '/login'
     post_via_redirect '/session', :username => username, :password => password
   end
+
+  def provider_logout
+    get '/p/logout'
+  end
 end
